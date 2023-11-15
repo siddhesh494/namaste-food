@@ -2210,4 +2210,3 @@ export const RES_DETAILS =  [
     }
   }
 ]
-
