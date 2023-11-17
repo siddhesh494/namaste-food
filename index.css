@@ -25,6 +25,11 @@ body {
   padding: 10px;
   margin: 10px;
 }
+.login-btn{
+  padding: 20px;
+  cursor: pointer;
+}
+/*  */
 
 /* body  */
 .body-container {
@@ -45,12 +50,28 @@ body {
   cursor: pointer;
 }
 
+.filter {
+  display: flex;
+  align-items: center;
+}
 .filter-btn {
   margin: 10px;
   cursor: pointer;
 }
 .res-logo {
   width: 100%;
+}
+
+/* shimmer */
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.shimmer-card {
+  margin: 20px;
+  width: 200px;
+  height: 400px;
+  background-color: #f0f0f0;
 }
 
 /*  */
