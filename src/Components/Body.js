@@ -1,15 +1,19 @@
 import { RES_DETAILS } from '../utils/mockData'
-import RestaurantCard from './RestaurantCard'
-import { useEffect, useState } from 'react'
+import RestaurantCard, { withPromotedLabel } from './RestaurantCard'
+import { useEffect, useState, useContext } from 'react'
 import Shimmer from './Shimmer'
 import { Link } from 'react-router-dom'
 import useOnlineStatus from '../utils/useOnlineState'
+import UserContext from '../utils/UserContext'
 
 const Body = () => {
 
+  const { setUserName, loggedInUser } = useContext(UserContext)
   const [listOfRestaurants, setListOfRestaurants] = useState([])
   const [filteredRestaurants, setFilteredRestaurants] = useState([])
   const [searchText, setSearchText] = useState("")
+
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard)
 
   useEffect(() => {
     fetchData()
@@ -22,7 +26,7 @@ const Body = () => {
       )
   
       const json = await data.json()
-      // console.log(json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants)
+      console.log(json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants)
       setListOfRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
       setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     
@@ -80,6 +84,16 @@ const Body = () => {
           </button>
         </div>
         
+        <div className='m-4 p-4 flex items-center'>
+          <label>username: </label>
+          <input 
+            className='border border-black p-2'
+            value={loggedInUser}
+            onChange={(e) =>{
+              setUserName(e.target.value)
+            }}
+          />
+        </div>
       </div>
       
       <div className='flex flex-wrap'>
@@ -90,9 +104,16 @@ const Body = () => {
               to={`/restaurant/${item.info.id}`}
               key={item.info.id}
             >
-              <RestaurantCard 
-                resData={item.info}
-              />
+              {/* If the restro has more than 4.0 rating add a promoted label to it */}
+              {
+                item.info.avgRating > 4 ? 
+                <RestaurantCardPromoted 
+                  resData={item.info}
+                /> :
+                <RestaurantCard 
+                  resData={item.info}
+                />
+              }
             </Link>
           )
         })}
