@@ -10,7 +10,6 @@ const Header = () => {
   const {loggedInUser} = useContext(UserContext)
 
   const cartItems = useSelector((store) => store.cart.items)
-  console.log("cartItems", cartItems)
   const onlineStatus = useOnlineStatus()
   return (
     <div className='flex items-center justify-between bg-pink-50 shadow-lg md:bg-yellow-50'>
